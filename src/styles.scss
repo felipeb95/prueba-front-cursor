@@ -1,1 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+.table-fixed tbody {
+  height: 300px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.table-fixed thead,
+.table-fixed tbody,
+.table-fixed tr,
+.table-fixed td,
+.table-fixed th {
+  display: block;
+}
+
+.table-fixed tbody td,
+.table-fixed tbody th,
+.table-fixed thead > tr > th {
+  float: left;
+  position: relative;
+
+  &::after {
+      content: '';
+      clear: both;
+      display: block;
+  }
+}
+
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSES
+* ==========================================
+*
+*/
+
+body {
+  background: #9874eb;
+  background: -webkit-linear-gradient(to right, #9874eb, #ACB6E5);
+  background: linear-gradient(to right, #9874eb, #ACB6E5);
+  min-height: 100vh;
+
+}

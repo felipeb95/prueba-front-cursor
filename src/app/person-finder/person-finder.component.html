@@ -1,0 +1,30 @@
+<div class="container py-5">
+  <div class="row">
+    <div class="col-lg-7 mx-auto mb-3 d-flex flex-row">
+      <input class="form-control shadow" type="text" placeholder="Search" aria-label="Search">
+      <div class="btn-group ml-3" [autoClose]="false" dropdown>
+        <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle shadow"
+                aria-controls="dropdown-basic">
+          <i class="fas fa-filter" aria-hidden="true"></i><span class="caret"></span>
+        </button>
+        <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+          <li role="menuitem">
+            <div class="dropdown-item form-check">
+              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+              <label class="form-check-label" for="defaultCheck1">
+                Filtro
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-7 mx-auto">
+      <ul class="list-group person-list shadow">
+        <li class="list-group-item">Persona</li>
+      </ul>
+    </div>
+  </div>
+</div>
