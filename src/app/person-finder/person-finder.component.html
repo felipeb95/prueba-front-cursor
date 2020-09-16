@@ -1,19 +1,16 @@
 <div class="container py-5">
   <div class="row">
     <div class="col-lg-7 mx-auto mb-3 d-flex flex-row">
-      <input class="form-control shadow" type="text" placeholder="Search" aria-label="Search">
+      <input class="form-control shadow" type="text" [(ngModel)]="searchText" autocomplete="off" placeholder="Buscar...">
       <div class="btn-group ml-3" [autoClose]="false" dropdown>
-        <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle shadow"
+        <button id="button-basic" dropdownToggle type="button" class="btn btn-info dropdown-toggle shadow"
                 aria-controls="dropdown-basic">
-          <i class="fas fa-filter" aria-hidden="true"></i><span class="caret"></span>
+          <i class="fas fa-filter" aria-hidden="true"></i>
         </button>
         <ul id="dropdown-basic" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
           <li role="menuitem">
-            <div class="dropdown-item form-check">
-              <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-              <label class="form-check-label" for="defaultCheck1">
-                Filtro
-              </label>
+            <div *ngFor="let region of regions" class="dropdown-item form-check">
+              <input class="form-check-input" type="checkbox" value="region" [(ngModel)]="region.checked" (change)="filterPersonsByRegion()"> {{ region.nombre }}
             </div>
           </li>
         </ul>
@@ -23,7 +20,36 @@
   <div class="row">
     <div class="col-lg-7 mx-auto">
       <ul class="list-group person-list shadow">
-        <li class="list-group-item">Persona</li>
+        <li *ngFor="let person of persons | filter:searchText" class="list-group-item d-flex justify-content-between">
+          <span>{{ person.nombre }} {{ person.apellido }}</span>
+          <button type="button" [ngClass]="{'btn-success': verifyInfo(person), 'btn-danger': !verifyInfo(person)}" class="btn" (click)="openModal(template, person)">
+            <i class="fas fa-info" aria-hidden="true"></i>
+          </button>
+          <ng-template #template>
+            <div class="modal-header">
+              <h4 class="modal-title pull-left">Datos de {{ selectedPerson.nombre }} {{ selectedPerson.apellido }} </h4>
+              <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Rut: {{ selectedPerson.rut }}</li>
+                <li class="list-group-item">Teléfono: {{ selectedPerson.telefono }}</li>
+                <li class="list-group-item">Dirección: {{ selectedPerson.direccion.calle }} {{ selectedPerson.direccion.numero }}, {{ selectedPerson.direccion.comuna.nombre }}</li>
+              </ul>
+              <div *ngIf="!isRutCorrect(selectedPerson.rut) && !isPhoneCorrect(selectedPerson.telefono)" class="alert alert-danger" role="alert">
+                Rut y teléfono inválidos.
+              </div>
+              <div *ngIf="!isRutCorrect(selectedPerson.rut) && isPhoneCorrect(selectedPerson.telefono)" class="alert alert-danger" role="alert">
+                Rut inválido.
+              </div>
+              <div *ngIf="isRutCorrect(selectedPerson.rut) && !isPhoneCorrect(selectedPerson.telefono)" class="alert alert-danger" role="alert">
+                Teléfono inválido.
+              </div>
+            </div>
+          </ng-template>
+        </li>
       </ul>
     </div>
   </div>
